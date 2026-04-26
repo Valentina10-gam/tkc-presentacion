@@ -1,0 +1,1495 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Propuesta TKC | Marketing Digital + Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #260045;
+      --purple-2: #3a0860;
+      --ink: #070912;
+      --panel: rgba(16, 18, 36, .82);
+      --panel-2: rgba(27, 16, 51, .78);
+      --line: rgba(97, 199, 238, .26);
+      --cyan: #61c7ee;
+      --cyan-2: #13e3ff;
+      --white: #fff;
+      --soft: #d9eff8;
+      --muted: #9ba7bc;
+      --amber: #f6b43b;
+      --green: #28d780;
+      --danger: #ff4c8b;
+      --shadow: 0 24px 80px rgba(0, 0, 0, .45);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: "Rajdhani", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 78% 34%, rgba(19, 227, 255, .16), transparent 28%),
+        radial-gradient(circle at 32% 68%, rgba(142, 47, 255, .16), transparent 30%),
+        linear-gradient(135deg, #030407 0%, #0a0717 42%, #030407 100%);
+      overflow: hidden;
+      letter-spacing: 0;
+      cursor: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, .1) 2px, rgba(0, 0, 0, .1) 4px),
+        radial-gradient(ellipse at center, transparent 54%, rgba(0, 0, 0, .62) 100%);
+      mix-blend-mode: normal;
+    }
+
+    #cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--cyan-2);
+      box-shadow: 0 0 16px rgba(19, 227, 255, .85), 0 0 38px rgba(19, 227, 255, .28);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    #cursor-ring {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(19, 227, 255, .48);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      transition: width .18s ease, height .18s ease, border-color .18s ease;
+    }
+
+    #top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 300;
+      background: linear-gradient(90deg, #7c2fff, #13e3ff, #ff4c8b, #f6b43b);
+      background-size: 220% auto;
+      box-shadow: 0 0 14px rgba(19, 227, 255, .65);
+      transition: width .35s ease;
+      animation: shimmer 4s linear infinite;
+    }
+
+    @keyframes shimmer {
+      from { background-position: 0% center; }
+      to { background-position: 220% center; }
+    }
+
+    .floating-brand {
+      position: fixed;
+      top: 18px;
+      left: 24px;
+      z-index: 220;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(217,239,248,.64);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 12px;
+    }
+
+    .floating-brand img {
+      width: 64px;
+      height: 52px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 18px rgba(19,227,255,.28));
+    }
+
+    .app {
+      min-height: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      position: relative;
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .42;
+      background-image:
+        linear-gradient(rgba(97, 199, 238, .17) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(97, 199, 238, .17) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 82%, transparent 100%);
+    }
+
+    .glow {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 999px;
+      background: rgba(97, 199, 238, .18);
+      filter: blur(70px);
+      right: 8%;
+      top: 18%;
+      pointer-events: none;
+      animation: breathe 7s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(.92); opacity: .42; }
+      50% { transform: scale(1.08); opacity: .78; }
+    }
+
+    .side {
+      display: none;
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      border-right: 1px solid rgba(97, 199, 238, .22);
+      background:
+        linear-gradient(180deg, rgba(18, 9, 32, .64), rgba(0, 0, 0, .72)),
+        radial-gradient(circle at 40% 18%, rgba(97, 199, 238, .22), transparent 35%);
+      overflow: hidden;
+      padding: 28px 24px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .side::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -40px -70px;
+      height: 46%;
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .84));
+      z-index: 2;
+    }
+
+    .side-grid {
+      position: absolute;
+      inset: 0;
+      opacity: .24;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(97,199,238,.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(97,199,238,.18) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+    }
+
+    .brand-card {
+      position: relative;
+      z-index: 4;
+      width: 168px;
+      height: 130px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      padding: 15px;
+      box-shadow: 0 14px 40px rgba(97, 199, 238, .22);
+    }
+
+    .brand-card img {
+      width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      height: auto;
+      display: block;
+    }
+
+    .side-copy {
+      position: relative;
+      z-index: 4;
+      color: var(--soft);
+    }
+
+    .side-copy .tiny {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+
+    .side-copy h2 {
+      font-size: clamp(24px, 2.4vw, 38px);
+      line-height: 1;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+
+    .side-copy p {
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0;
+      color: rgba(217, 239, 248, .78);
+      max-width: 280px;
+    }
+
+    .side-stack {
+      position: relative;
+      z-index: 4;
+      display: grid;
+      gap: 12px;
+    }
+
+    .side-pill {
+      border: 1px solid rgba(97,199,238,.2);
+      border-radius: 14px;
+      padding: 12px;
+      color: rgba(217,239,248,.82);
+      background: rgba(8, 11, 25, .54);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .side-pill b {
+      display: block;
+      color: var(--cyan);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 5px;
+    }
+
+    .side-pill span {
+      font-size: 13px;
+      line-height: 1.28;
+    }
+
+    .stage-wrap {
+      position: relative;
+      z-index: 3;
+      min-width: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: 44px 70px 28px;
+    }
+
+    .stage {
+      position: relative;
+      width: min(1280px, 100%);
+      aspect-ratio: 16 / 9;
+      align-self: center;
+      justify-self: center;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(7, 9, 18, .78), rgba(3, 3, 10, .96)),
+        radial-gradient(circle at 72% 24%, rgba(97, 199, 238, .18), transparent 38%);
+      border: 1px solid rgba(97, 199, 238, .2);
+      box-shadow: var(--shadow), 0 0 58px rgba(19,227,255,.08), inset 0 0 0 1px rgba(255,255,255,.04);
+      overflow: hidden;
+    }
+
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(97, 199, 238, .12), transparent 16%),
+        linear-gradient(rgba(97, 199, 238, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(97, 199, 238, .05) 1px, transparent 1px);
+      background-size: auto, 44px 44px, 44px 44px;
+      opacity: .55;
+      pointer-events: none;
+    }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, transparent 0%, transparent 42%, rgba(19,227,255,.12) 49%, transparent 56%, transparent 100%);
+      background-size: 260% 260%;
+      opacity: .34;
+      animation: sweep 6s ease-in-out infinite;
+    }
+
+    @keyframes sweep {
+      0% { background-position: -80% -80%; opacity: 0; }
+      20% { opacity: .34; }
+      80% { opacity: .22; }
+      100% { background-position: 160% 160%; opacity: 0; }
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(28px, 4vw, 58px);
+      opacity: 0;
+      transform: translateY(18px) scale(.985);
+      pointer-events: none;
+      transition: opacity .42s ease, transform .42s ease;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 26px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .slide-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      border: 1px solid rgba(97, 199, 238, .42);
+      border-radius: 8px;
+      padding: 7px 14px;
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      background: rgba(97, 199, 238, .08);
+      box-shadow: 0 0 24px rgba(97, 199, 238, .08);
+    }
+
+    .counter {
+      color: rgba(217,239,248,.62);
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .2em;
+    }
+
+    .content {
+      display: grid;
+      align-content: center;
+      gap: 22px;
+    }
+
+    h1 {
+      font-family: "Bebas Neue", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .045em;
+      font-size: clamp(36px, 4.25vw, 66px);
+      line-height: .98;
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    h1 span, .cyan { color: var(--cyan-2); }
+    h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.06;
+      color: var(--white);
+    }
+
+    p.lead {
+      margin: 0;
+      color: var(--soft);
+      font-size: clamp(17px, 1.7vw, 24px);
+      line-height: 1.32;
+      max-width: 880px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      min-height: 132px;
+      border: 1px solid rgba(97, 199, 238, .18);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(19, 21, 42, .78), rgba(13, 9, 27, .86));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 0 16px 44px rgba(0,0,0,.18);
+      position: relative;
+      overflow: hidden;
+      transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease, background .28s ease;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -40% 40%;
+      height: 80px;
+      background: rgba(97,199,238,.1);
+      filter: blur(28px);
+      transition: opacity .28s ease, transform .28s ease;
+      opacity: .7;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.015);
+      border-color: rgba(19, 227, 255, .72);
+      background:
+        linear-gradient(180deg, rgba(22, 31, 58, .88), rgba(17, 9, 36, .94)),
+        radial-gradient(circle at 50% 0%, rgba(19,227,255,.18), transparent 45%);
+      box-shadow:
+        0 26px 80px rgba(0, 0, 0, .38),
+        0 0 34px rgba(19, 227, 255, .18),
+        inset 0 0 0 1px rgba(255,255,255,.08);
+      z-index: 5;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+      transform: translateY(-14px) scale(1.25);
+    }
+
+    .card .tag {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon {
+      width: 21px;
+      height: 21px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      color: var(--cyan-2);
+      filter: drop-shadow(0 0 10px rgba(19,227,255,.42));
+    }
+
+    .icon[data-tone="green"], .card .tag[data-tone="green"] { color: #28d780; }
+    .icon[data-tone="amber"], .card .tag[data-tone="amber"] { color: #f6b43b; }
+    .icon[data-tone="pink"], .card .tag[data-tone="pink"] { color: #ff4c8b; }
+    .icon[data-tone="violet"], .card .tag[data-tone="violet"] { color: #a873ff; }
+    .icon[data-tone="cyan"], .card .tag[data-tone="cyan"] { color: #13e3ff; }
+    .icon[data-tone="white"], .card .tag[data-tone="white"] { color: #f4f7fb; }
+
+    .icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card strong {
+      display: block;
+      color: var(--white);
+      font-size: clamp(24px, 2.6vw, 40px);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .card p, .card li {
+      color: rgba(217,239,248,.78);
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.38;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      background: var(--cyan);
+      box-shadow: 0 0 12px rgba(97,199,238,.75);
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric {
+      border-left: 3px solid var(--cyan);
+      padding: 4px 12px;
+      min-height: 84px;
+      transition: transform .25s ease, filter .25s ease;
+    }
+
+    .metric:hover {
+      transform: translateY(-5px);
+      filter: drop-shadow(0 0 18px rgba(19,227,255,.22));
+    }
+
+    .metric b {
+      display: block;
+      font-size: clamp(30px, 3.2vw, 52px);
+      color: var(--white);
+      line-height: .95;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 7px;
+      color: var(--cyan);
+      font-weight: 900;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    .metric small {
+      display: block;
+      color: rgba(217,239,248,.68);
+      margin-top: 5px;
+      line-height: 1.25;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 56px;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--soft);
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      border: 1px solid rgba(97,199,238,.16);
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      width: var(--w);
+      background: linear-gradient(90deg, var(--cyan), var(--cyan-2));
+      border-radius: inherit;
+      box-shadow: 0 0 22px rgba(19,227,255,.35);
+    }
+
+    .competitor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .competitor-card {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 14px;
+      background:
+        linear-gradient(180deg, rgba(19, 21, 42, .76), rgba(11, 8, 24, .88)),
+        radial-gradient(circle at 20% 0%, var(--tone, rgba(97,199,238,.18)), transparent 42%);
+      min-height: 138px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .competitor-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255,255,255,.24);
+      box-shadow: 0 22px 52px rgba(0,0,0,.36), 0 0 28px var(--tone, rgba(97,199,238,.22));
+      z-index: 4;
+    }
+
+    .competitor-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .competitor-head b {
+      color: var(--white);
+      font-size: 17px;
+      line-height: 1.05;
+    }
+
+    .followers {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      color: var(--accent, var(--cyan));
+      font-size: 28px;
+      line-height: .9;
+      text-shadow: 0 0 18px var(--tone, rgba(97,199,238,.3));
+      white-space: nowrap;
+    }
+
+    .competitor-card p {
+      color: rgba(217,239,248,.78);
+      font-size: 13px;
+      line-height: 1.34;
+      margin: 0 0 11px;
+    }
+
+    .signal {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .signal i {
+      height: 5px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.09);
+      overflow: hidden;
+    }
+
+    .signal i.on {
+      background: linear-gradient(90deg, var(--accent, var(--cyan)), rgba(255,255,255,.78));
+      box-shadow: 0 0 16px var(--tone, rgba(97,199,238,.35));
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .phase {
+      position: relative;
+      padding-top: 28px;
+    }
+
+    .phase::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: -18px;
+      top: 10px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), rgba(97,199,238,.05));
+    }
+
+    .phase::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 24px rgba(97,199,238,.75);
+    }
+
+    .motion-map {
+      position: relative;
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .motion-map::before {
+      content: "";
+      position: absolute;
+      width: 74%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(19,227,255,.8), transparent);
+      top: 50%;
+      left: 13%;
+      box-shadow: 0 0 24px rgba(19,227,255,.3);
+      z-index: -1;
+    }
+
+    .motion-center {
+      width: 176px;
+      height: 176px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 22px;
+      background:
+        radial-gradient(circle, rgba(19,227,255,.22), rgba(20,10,46,.84) 62%, rgba(8,9,20,.94)),
+        linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.01));
+      border: 1px solid rgba(19,227,255,.52);
+      box-shadow: 0 0 42px rgba(19,227,255,.22), inset 0 0 0 1px rgba(255,255,255,.06);
+      font-weight: 900;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .orbit-node {
+      position: absolute;
+      width: 215px;
+      min-height: 84px;
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(12, 14, 30, .86);
+      border: 1px solid rgba(255,255,255,.13);
+      box-shadow: 0 20px 55px rgba(0,0,0,.28), 0 0 26px var(--tone, rgba(19,227,255,.15));
+      transition: transform .26s ease, border-color .26s ease;
+    }
+
+    .orbit-node:hover {
+      transform: translateY(-7px) scale(1.03);
+      border-color: var(--accent, var(--cyan));
+      z-index: 4;
+    }
+
+    .orbit-node b {
+      display: block;
+      color: var(--accent, var(--cyan));
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+
+    .orbit-node p {
+      margin: 0;
+      color: rgba(217,239,248,.8);
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .node-a { left: 5%; top: 7%; }
+    .node-b { right: 5%; top: 7%; }
+    .node-c { left: 8%; bottom: 2%; }
+    .node-d { right: 8%; bottom: 2%; }
+
+    .value-strip {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .value-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .value-line {
+      border-left: 4px solid var(--accent, var(--cyan));
+      padding: 12px 14px;
+      border-radius: 0 16px 16px 0;
+      background: linear-gradient(90deg, var(--tone, rgba(97,199,238,.12)), rgba(255,255,255,.03));
+    }
+
+    .value-line b {
+      display: block;
+      color: var(--accent, var(--cyan));
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: .08em;
+      margin-bottom: 5px;
+    }
+
+    .value-line span {
+      color: rgba(217,239,248,.85);
+      line-height: 1.35;
+    }
+
+    .web-diagnosis {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .web-score {
+      min-height: 300px;
+      border-radius: 24px;
+      border: 1px solid rgba(19,227,255,.24);
+      background:
+        radial-gradient(circle at 50% 45%, rgba(19,227,255,.22), transparent 33%),
+        linear-gradient(180deg, rgba(15,18,38,.82), rgba(9,7,22,.9));
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 44px rgba(19,227,255,.1);
+    }
+
+    .web-score::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      border: 1px solid rgba(19,227,255,.38);
+      box-shadow: inset 0 0 40px rgba(19,227,255,.08);
+    }
+
+    .web-score strong {
+      position: relative;
+      z-index: 2;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: 58px;
+      line-height: .9;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .web-score span {
+      display: block;
+      color: var(--cyan-2);
+      font-size: 34px;
+    }
+
+    .web-notes {
+      display: grid;
+      gap: 12px;
+    }
+
+    .web-note {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, var(--tone, rgba(97,199,238,.12)), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.09);
+    }
+
+    .web-note b {
+      color: var(--accent, var(--cyan));
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-size: 12px;
+    }
+
+    .web-note p {
+      margin: 0;
+      color: rgba(217,239,248,.82);
+      line-height: 1.34;
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .price-card {
+      min-height: 190px;
+    }
+
+    .price-card.maintenance {
+      border-color: rgba(246,180,59,.7);
+      background:
+        linear-gradient(180deg, rgba(58,39,10,.86), rgba(17,10,21,.92)),
+        radial-gradient(circle at 50% 0%, rgba(246,180,59,.22), transparent 48%);
+      box-shadow: 0 24px 58px rgba(0,0,0,.28), 0 0 34px rgba(246,180,59,.15);
+    }
+
+    .control {
+      width: min(1200px, 100%);
+      justify-self: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      color: rgba(217,239,248,.8);
+      padding-top: 14px;
+    }
+
+    .btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(97,199,238,.28);
+      background: rgba(255,255,255,.06);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+      font-size: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(97,199,238,.16);
+      border-color: rgba(97,199,238,.56);
+    }
+
+    .progress {
+      width: min(360px, 35vw);
+      height: 5px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      border: 1px solid rgba(97,199,238,.13);
+    }
+
+    .progress i {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--cyan-2));
+      box-shadow: 0 0 20px rgba(19,227,255,.45);
+      transition: width .3s ease;
+    }
+
+    .timer {
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+      letter-spacing: .06em;
+      min-width: 70px;
+      text-align: center;
+    }
+
+    .hint {
+      position: fixed;
+      right: 18px;
+      bottom: 16px;
+      color: rgba(217,239,248,.35);
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      z-index: 230;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .big-logo {
+      position: absolute;
+      right: -90px;
+      bottom: -110px;
+      width: 420px;
+      opacity: .04;
+      filter: grayscale(1);
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      .app { grid-template-columns: 1fr; }
+      .side { display: none; }
+      .stage-wrap { height: auto; min-height: 100vh; padding: 18px; }
+      .stage { aspect-ratio: auto; min-height: 74vh; }
+      .slide { padding: 24px; }
+      .cards, .cards.three, .cards.four, .metric-grid, .timeline, .split, .competitor-grid, .value-strip, .web-diagnosis, .price-grid { grid-template-columns: 1fr; }
+      .motion-map { min-height: 560px; }
+      .motion-map::before { display: none; }
+      .motion-center, .orbit-node { position: relative; inset: auto; width: 100%; height: auto; }
+      h1 { font-size: 42px; }
+      .control { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+  <div id="top-progress"></div>
+  <div class="floating-brand"><img src="assets/logo-mark.png" alt="TKC Fumigaciones Group" /><span>Propuesta digital</span></div>
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <main class="app">
+    <aside class="side">
+      <div class="side-grid"></div>
+      <div class="brand-card"><img src="assets/logo-mark.png" alt="TKC Fumigaciones Group" /></div>
+      <div class="side-stack" aria-label="Ejes de la propuesta">
+        <div class="side-pill"><b>01</b><span>Diagnóstico competitivo</span></div>
+        <div class="side-pill"><b>02</b><span>Redes + pauta inicial</span></div>
+        <div class="side-pill"><b>03</b><span>Website y posicionamiento</span></div>
+        <div class="side-pill"><b>04</b><span>Identidad corporativa</span></div>
+      </div>
+      <div class="side-copy">
+        <div class="tiny">Propuesta digital</div>
+        <h2>TKC como marca visible, confiable y medible.</h2>
+        <p>Marketing, redes, web, pauta inicial e identidad corporativa en una ruta progresiva.</p>
+      </div>
+    </aside>
+
+    <section class="stage-wrap">
+      <div class="stage" id="stage">
+        <img class="big-logo" src="assets/logo-mark.png" alt="" />
+
+        <article class="slide active" data-title="Portada">
+          <div class="slide-top"><div class="eyebrow">TKC Fumigaciones Group</div><div class="counter"></div></div>
+          <div class="content">
+            <div>
+              <h1>Presencia digital que convierta respaldo en <span>confianza</span></h1>
+              <p class="lead">Propuesta integral para fortalecer redes, posicionamiento B2B, pauta inicial, web y diseño corporativo de TKC.</p>
+            </div>
+            <div class="cards three">
+              <div class="card"><div class="tag">Marketing</div><p>Contenido estratégico para visibilidad, confianza y contacto.</p></div>
+              <div class="card"><div class="tag">Website</div><p>Una web más clara, comercial y preparada para convertir.</p></div>
+              <div class="card"><div class="tag">Identidad</div><p>Diseño institucional para propuestas, equipo y comunicación interna.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Contexto">
+          <div class="slide-top"><div class="eyebrow">Contexto</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>TKC tiene respaldo. Ahora debe ser <span>más visible</span>.</h1>
+            <div class="cards">
+              <div class="card"><div class="tag">Lo que ya existe</div><ul><li>Trayectoria desde 2004.</li><li>Clientes corporativos y certificaciones.</li><li>Web activa con líneas de negocio.</li><li>Experiencia técnica para educar al mercado.</li></ul></div>
+              <div class="card"><div class="tag">Lo que vamos a fortalecer</div><ul><li>Redes con línea visual más actual.</li><li>Instagram más fácil de encontrar.</li><li>TikTok como canal de descubrimiento.</li><li>LinkedIn fuerte para clientes empresariales.</li></ul></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Competencia">
+          <div class="slide-top"><div class="eyebrow">Competencia</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Mapa competitivo: quién domina y dónde TKC puede <span>ganar</span>.</h1>
+            <p class="lead">Lectura pública de Instagram: seguidores + diagnóstico rápido por marca.</p>
+            <div class="competitor-grid">
+              <div class="competitor-card" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.28)">
+                <div class="competitor-head"><b>Orkin global</b><span class="followers">32K</span></div>
+                <p>Referente internacional: fuerte reconocimiento, autoridad y contenido educativo.</p>
+                <div class="signal"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+              </div>
+              <div class="competitor-card" style="--accent:#f6b43b;--tone:rgba(246,180,59,.28)">
+                <div class="competitor-head"><b>Palmera Junior</b><span class="followers">11K</span></div>
+                <p>Competidor local visible: comunidad fuerte, constancia y alta recordación.</p>
+                <div class="signal"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+              </div>
+              <div class="competitor-card" style="--accent:#13e3ff;--tone:rgba(19,227,255,.28)">
+                <div class="competitor-head"><b>TKC</b><span class="followers">384</span></div>
+                <p>Respaldo real con baja visibilidad: oportunidad clara para crecer con estrategia.</p>
+                <div class="signal"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="competitor-card" style="--accent:#28d780;--tone:rgba(40,215,128,.24)">
+                <div class="competitor-head"><b>Ambicol</b><span class="followers">342</span></div>
+                <p>Presencia similar a TKC: puede competir por cercanía, sector y contenido útil.</p>
+                <div class="signal"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="competitor-card" style="--accent:#a873ff;--tone:rgba(168,115,255,.25)">
+                <div class="competitor-head"><b>Rentokil CO</b><span class="followers">115</span></div>
+                <p>Marca internacional, pero su cuenta local no domina la conversación social.</p>
+                <div class="signal"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="competitor-card" style="--accent:#f4f7fb;--tone:rgba(244,247,251,.18)">
+                <div class="competitor-head"><b>Zeta</b><span class="followers">49</span></div>
+                <p>Baja amenaza digital directa: oportunidad para que TKC tome ventaja visual.</p>
+                <div class="signal"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Oportunidad">
+          <div class="slide-top"><div class="eyebrow">Hallazgo</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>No se trata de publicar más. Se trata de <span>comunicar mejor</span>.</h1>
+            <div class="cards three">
+              <div class="card"><div class="tag">01 Visibilidad</div><p>Que la marca sea fácil de encontrar, reconocer y recordar.</p></div>
+              <div class="card"><div class="tag">02 Confianza</div><p>Convertir certificaciones, clientes y procesos en contenido de autoridad.</p></div>
+              <div class="card"><div class="tag">03 Conversión</div><p>Llevar al usuario a WhatsApp, formulario, llamada o cotización.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Diagnóstico">
+          <div class="slide-top"><div class="eyebrow">Diagnóstico digital</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Qué debemos fortalecer para que TKC se vea más <span>competitiva</span>.</h1>
+            <div class="cards">
+              <div class="card"><div class="tag">Redes sociales</div><ul><li>Instagram no es fácil de encontrar sin el @ exacto.</li><li>La línea visual debe verse más técnica y confiable.</li><li>El contenido debe separar mensajes B2B y B2C.</li><li>No existe TikTok, aunque hay potencial educativo.</li></ul></div>
+              <div class="card"><div class="tag">Website</div><ul><li>La web tiene buena base, pero puede convertir mejor.</li><li>Faltan páginas por servicio y sector.</li><li>El formulario y contactos deben simplificarse.</li><li>El blog puede ser motor de SEO y contenido.</li></ul></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Estrategia">
+          <div class="slide-top"><div class="eyebrow">Estrategia</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Un ecosistema, no piezas sueltas.</h1>
+            <div class="cards four">
+              <div class="card"><strong>IG + FB</strong><p>Confianza, educación y recordación.</p></div>
+              <div class="card"><strong>LinkedIn</strong><p>Clientes corporativos, certificaciones y sectores.</p></div>
+              <div class="card"><strong>TikTok</strong><p>Contenido corto, preventivo y educativo.</p></div>
+              <div class="card"><strong>Web + pauta</strong><p>Tráfico, WhatsApp, llamadas y cotizaciones.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Pilares">
+          <div class="slide-top"><div class="eyebrow">Contenido</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Pilares para comunicar con <span>intención</span>.</h1>
+            <div class="cards three">
+              <div class="card"><div class="tag">Educación</div><p>Señales de alerta, prevención y buenas prácticas.</p></div>
+              <div class="card"><div class="tag">Autoridad técnica</div><p>Protocolos, certificaciones, HSEQ y procesos.</p></div>
+              <div class="card"><div class="tag">Confianza</div><p>Clientes, trayectoria, equipo y casos.</p></div>
+              <div class="card"><div class="tag">Conversión</div><p>Servicios, cotización, WhatsApp y formularios.</p></div>
+              <div class="card"><div class="tag">Sectores</div><p>Restaurantes, hoteles, bodegas, hogares e industria.</p></div>
+              <div class="card"><div class="tag">Cultura interna</div><p>Videos corporativos, inducción y formación.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Metas">
+          <div class="slide-top"><div class="eyebrow">Metas 90 días</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Números de implementación y <span>aprendizaje</span>.</h1>
+            <div class="metric-grid">
+              <div class="metric"><b>36-48</b><span>Contenidos</span><small>IG, FB, TikTok y LinkedIn.</small></div>
+              <div class="metric"><b>12-16</b><span>LinkedIn</span><small>Enfoque B2B y autoridad.</small></div>
+              <div class="metric"><b>8-12</b><span>Reels/TikToks</span><small>Educativos y de descubrimiento.</small></div>
+              <div class="metric"><b>2-4</b><span>Blogs</span><small>SEO y contenido reutilizable.</small></div>
+              <div class="metric"><b>+15</b><span>Videos</span><small>Trabajados por bloques.</small></div>
+              <div class="metric"><b>1-2</b><span>Campañas</span><small>Según presupuesto aprobado.</small></div>
+              <div class="metric"><b>1</b><span>Web</span><small>Optimizada o en fase final.</small></div>
+              <div class="metric"><b>1</b><span>Informe</span><small>Aprendizajes y próximos pasos.</small></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Pauta">
+          <div class="slide-top"><div class="eyebrow">Pauta inicial</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Activación progresiva, controlada y <span>medible</span>.</h1>
+            <div class="cards">
+              <div class="card"><div class="tag">Meta Ads</div><ul><li>Reconocimiento de marca.</li><li>Tráfico a WhatsApp.</li><li>Formularios o mensajes.</li><li>Remarketing.</li></ul></div>
+              <div class="card"><div class="tag">Google Ads</div><ul><li>Control de plagas Bogotá.</li><li>Fumigación para empresas.</li><li>Control de roedores.</li><li>Lavado de tanques.</li></ul></div>
+            </div>
+            <p class="lead">Inversión publicitaria sugerida: $800.000 a $1.500.000 COP mensuales, pagada aparte por TKC.</p>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Cronograma">
+          <div class="slide-top"><div class="eyebrow">Cronograma</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Una ruta escalonada para avanzar con foco.</h1>
+            <div class="timeline">
+              <div class="phase card"><div class="tag">Mes 1 · Redes + videos</div><ul><li>Videos corporativos de procedimientos</li><li>Definición del enfoque de redes</li><li>Calendario y línea visual</li><li>Inicio completo de redes sociales</li></ul></div>
+              <div class="phase card"><div class="tag">Mes 2 · Web + pauta</div><ul><li>Inicio de optimización o rediseño web</li><li>Pauta después de fortalecer redes</li><li>Primeras campañas medibles</li><li>Ajustes según respuesta</li></ul></div>
+              <div class="phase card"><div class="tag">Mes 3 · Optimizar</div><ul><li>Web final o fase avanzada</li><li>Blog y contenido de apoyo</li><li>Informe trimestral</li><li>Plan de continuidad</li></ul></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Primeros meses">
+          <div class="slide-top"><div class="eyebrow">Implementación</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Primero ordenamos la base digital, luego aceleramos.</h1>
+            <div class="value-strip">
+              <div class="value-list">
+                <div class="value-line" style="--accent:#13e3ff;--tone:rgba(19,227,255,.14)"><b>Primer mes</b><span>Grabación y uso de videos corporativos de procedimientos, enfoque de redes, calendario, línea visual y arranque completo de contenidos.</span></div>
+                <div class="value-line" style="--accent:#f6b43b;--tone:rgba(246,180,59,.14)"><b>Segundo mes</b><span>Inicio de web y activación de pauta cuando las redes ya tengan mejor presentación, mensajes claros y piezas listas para recibir tráfico.</span></div>
+                <div class="value-line" style="--accent:#28d780;--tone:rgba(40,215,128,.14)"><b>Tercer mes</b><span>Optimización con datos: qué contenido funcionó, qué campaña trajo contactos y qué debe reforzarse para vender mejor.</span></div>
+              </div>
+              <div class="card">
+                <div class="tag">Por qué así</div>
+                <p>Esto evita hacer todo al tiempo y permite que TKC llegue a pauta y web con una presencia más coherente, profesional y lista para convertir.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Inversión">
+          <div class="slide-top"><div class="eyebrow">Inversión</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Opciones para iniciar de forma <span>progresiva</span>.</h1>
+            <div class="cards three">
+              <div class="card"><div class="tag">Presencia activa</div><strong>$1.800.000</strong><p>12 contenidos, IG/FB, 4 reels, 1 jornada, informe básico.</p></div>
+              <div class="card"><div class="tag">Crecimiento digital</div><strong>$2.600.000</strong><p>16 contenidos, LinkedIn, TikTok, pauta inicial y reporte.</p></div>
+              <div class="card"><div class="tag">Posicionamiento</div><strong>$3.500.000</strong><p>22 contenidos, LinkedIn fuerte, 3 campañas y 2 jornadas.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="LinkedIn B2B">
+          <div class="slide-top"><div class="eyebrow">LinkedIn</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>LinkedIn debe abrir conversaciones con clientes empresariales.</h1>
+            <div class="motion-map">
+              <div class="motion-center">TKC como aliado B2B</div>
+              <div class="orbit-node node-a" style="--accent:#13e3ff;--tone:rgba(19,227,255,.2)"><b>Autoridad</b><p>Certificaciones, procesos y cumplimiento.</p></div>
+              <div class="orbit-node node-b" style="--accent:#f6b43b;--tone:rgba(246,180,59,.2)"><b>Sectores</b><p>Hoteles, industria, bodegas, comercio y alimentos.</p></div>
+              <div class="orbit-node node-c" style="--accent:#28d780;--tone:rgba(40,215,128,.2)"><b>Confianza</b><p>Clientes, equipo, experiencia y cobertura.</p></div>
+              <div class="orbit-node node-d" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.2)"><b>Contacto</b><p>Mensajes comerciales que inviten a cotizar.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Web">
+          <div class="slide-top"><div class="eyebrow">Website</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>La web debe hacer que el cliente contacte <span>más rápido</span>.</h1>
+            <div class="cards">
+              <div class="card"><div class="tag">Menos fricción</div><ul><li>El formulario no puede ser el único camino.</li><li>Muchos clientes ven “contáctanos” y no quieren llenar campos.</li><li>El botón de WhatsApp debe estar visible y contextual.</li><li>Llamada, correo y cotización deben estar a un clic.</li></ul></div>
+              <div class="card"><div class="tag">Sugerencia comercial</div><p>Convertir la web en una herramienta de venta directa: servicios claros, sectores atendidos, prueba de confianza y llamados a la acción rápidos en cada página.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Web competencia">
+          <div class="slide-top"><div class="eyebrow">Diagnóstico web</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>La web de TKC puede competir mejor si comunica confianza en segundos.</h1>
+            <div class="web-diagnosis">
+              <div class="web-score"><strong>Web que <span>vende</span> rápido</strong></div>
+              <div class="web-notes">
+                <div class="web-note" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.14)"><b>Rentokil / Orkin</b><p>Proyectan autoridad internacional y rutas claras por servicio.</p></div>
+                <div class="web-note" style="--accent:#f6b43b;--tone:rgba(246,180,59,.14)"><b>Palmera Junior</b><p>Se siente más cercana y local; gana por rapidez de contacto y recordación.</p></div>
+                <div class="web-note" style="--accent:#28d780;--tone:rgba(40,215,128,.14)"><b>Oportunidad TKC</b><p>Servicios visibles, prueba de experiencia, certificaciones, blog útil y botones de cotización siempre disponibles.</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Web inversión">
+          <div class="slide-top"><div class="eyebrow">Inversión web</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Optimizar sin perder dominio ni presencia actual.</h1>
+            <div class="price-grid">
+              <div class="card price-card"><div class="tag">Optimización actual</div><strong>$1.800.000</strong><p>Ajuste visual, textos, CTAs, blog inicial y contacto más directo.</p></div>
+              <div class="card price-card"><div class="tag">Rediseño completo</div><strong>$3.200.000</strong><p>Web moderna, servicios claros, sectores atendidos, blog y rutas de cotización rápida.</p></div>
+              <div class="card price-card"><div class="tag">Web + contenido</div><strong>$4.500.000</strong><p>Páginas por servicio, sectores, FAQs y hasta 8 blogs iniciales.</p></div>
+              <div class="card price-card maintenance"><div class="tag">Mantenimiento mensual</div><strong>$450.000+</strong><p>Actualizaciones, nuevos blogs y mejoras para que la web no quede quieta.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Valor agregado institucional">
+          <div class="slide-top"><div class="eyebrow">Valor agregado</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Soporte institucional para que la marca se vea consistente.</h1>
+            <div class="cards">
+              <div class="card"><div class="tag">Kit comercial e institucional</div><strong>$950.000</strong><p>Firma de correo, plantilla de presentación, portada de propuesta, hoja membretada digital y guía visual básica de uso.</p></div>
+              <div class="card"><div class="tag">Diseño mensual</div><strong>$650.000 / mes</strong><p>10 piezas estáticas mensuales para comunicados, presentaciones, avisos internos, publicaciones institucionales o piezas comerciales.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Medición">
+          <div class="slide-top"><div class="eyebrow">Medición</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Lo que no se mide se vuelve opinión. Aquí medimos avance.</h1>
+            <div class="metric-grid">
+              <div class="metric"><b>Alcance</b><span>Marca</span><small>Personas impactadas.</small></div>
+              <div class="metric"><b>Clics</b><span>Interés</span><small>Tráfico a web o WhatsApp.</small></div>
+              <div class="metric"><b>Leads</b><span>Contacto</span><small>Formularios, mensajes y llamadas.</small></div>
+              <div class="metric"><b>CPL</b><span>Pauta</span><small>Costo por contacto.</small></div>
+              <div class="metric"><b>Top</b><span>Contenido</span><small>Piezas con mejor respuesta.</small></div>
+              <div class="metric"><b>SEO</b><span>Web</span><small>Blogs y páginas visibles.</small></div>
+              <div class="metric"><b>CTR</b><span>Anuncios</span><small>Calidad del mensaje.</small></div>
+              <div class="metric"><b>90</b><span>Días</span><small>Lectura trimestral.</small></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Requerimientos">
+          <div class="slide-top"><div class="eyebrow">Para iniciar</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Qué necesitamos de TKC para trabajar con agilidad.</h1>
+            <div class="cards">
+              <div class="card"><div class="tag">Accesos</div><ul><li>Instagram, Facebook y LinkedIn.</li><li>Administrador comercial de Meta.</li><li>Web, dominio y hosting.</li><li>Google Analytics/Search Console si existen.</li></ul></div>
+              <div class="card"><div class="tag">Insumos</div><ul><li>Servicios prioritarios.</li><li>Fotos, certificaciones y clientes autorizados.</li><li>Agenda de grabación por bloques.</li><li>Aprobación mensual de contenidos.</li></ul></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Arranque recomendado">
+          <div class="slide-top"><div class="eyebrow">Arranque recomendado</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Así arrancamos los primeros 3 meses.</h1>
+            <div class="timeline">
+              <div class="phase card"><div class="tag">Mes 1</div><strong>Redes + videos</strong><p>Base de contenidos, procedimientos, enfoque visual, calendario y publicaciones iniciales.</p></div>
+              <div class="phase card"><div class="tag">Mes 2</div><strong>Web + pauta</strong><p>Iniciamos web y activamos campañas cuando las redes ya estén optimizadas.</p></div>
+              <div class="phase card"><div class="tag">Mes 3</div><strong>Medición + continuidad</strong><p>Revisamos resultados, ajustamos contenidos y definimos qué se escala.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Cierre">
+          <div class="slide-top"><div class="eyebrow">Cómo iniciamos</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Llegamos a la jornada con una base lista para decidir y producir.</h1>
+            <p class="lead">La idea es presentar una base inicial de contenidos para redes: qué servicios priorizar, qué empezar a publicar y cómo conectar esos contenidos con videos, web y pauta.</p>
+            <div class="cards">
+              <div class="card"><div class="tag">En la reunión</div><ul><li>Mostrar propuestas de temas para redes.</li><li>Validar servicios y públicos prioritarios.</li><li>Definir qué videos de procedimientos grabar primero.</li><li>Aprobar el enfoque visual y comercial inicial.</li></ul></div>
+              <div class="card"><div class="tag">Después de aprobar</div><p>Se arma el calendario del primer mes, se organizan las grabaciones y se inicia la producción de piezas para activar redes completamente.</p></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <nav class="control" aria-label="Controles de presentación">
+        <button class="btn" id="prev" aria-label="Anterior">‹</button>
+        <div class="progress"><i id="progress"></i></div>
+        <div class="timer"><span id="current">01</span> / <span id="total">16</span></div>
+        <button class="btn" id="next" aria-label="Siguiente">›</button>
+      </nav>
+    </section>
+  </main>
+  <div class="hint">Click · Space · Flechas para navegar</div>
+
+  <script>
+    const icons = {
+      marketing: '<path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16V9"/><path d="M12 16V7"/><path d="M16 16v-4"/>',
+      website: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/>',
+      identidad: '<path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-5"/>',
+      linkedin: '<path d="M8 11v7"/><path d="M8 8v.01"/><path d="M12 18v-7"/><path d="M12 14c0-2 1-3 3-3s3 1.5 3 4v3"/>',
+      video: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/>',
+      search: '<circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/>',
+      target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M22 12h-4"/><path d="M12 22v-4"/><path d="M2 12h4"/>',
+      money: '<path d="M4 7h16v10H4z"/><path d="M8 12h.01"/><path d="M16 12h.01"/><circle cx="12" cy="12" r="2"/>',
+      calendar: '<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 10h16"/>',
+      report: '<path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/><path d="M9 13h6"/><path d="M9 17h6"/>',
+      default: '<path d="M12 2l2.8 6.8L22 12l-7.2 3.2L12 22l-2.8-6.8L2 12l7.2-3.2L12 2z"/>'
+    };
+
+    function iconFor(text) {
+      const value = text.toLowerCase();
+      if (value.includes('marketing') || value.includes('redes') || value.includes('contenido')) return icons.marketing;
+      if (value.includes('web') || value.includes('seo') || value.includes('aeo') || value.includes('blog')) return icons.website;
+      if (value.includes('identidad') || value.includes('manual') || value.includes('marca') || value.includes('kit')) return icons.identidad;
+      if (value.includes('linkedin') || value.includes('b2b')) return icons.linkedin;
+      if (value.includes('video') || value.includes('micro')) return icons.video;
+      if (value.includes('meta ads') || value.includes('google') || value.includes('pauta') || value.includes('medición')) return icons.target;
+      if (value.includes('inversión') || value.includes('$') || value.includes('posicionamiento') || value.includes('presencia') || value.includes('crecimiento')) return icons.money;
+      if (value.includes('mes') || value.includes('cronograma')) return icons.calendar;
+      if (value.includes('diagnóstico') || value.includes('reporte') || value.includes('informe') || value.includes('accesos') || value.includes('insumos')) return icons.report;
+      if (value.includes('optimización') || value.includes('búsqueda')) return icons.search;
+      return icons.default;
+    }
+
+    function toneFor(text) {
+      const value = text.toLowerCase();
+      if (value.includes('marketing') || value.includes('contenido') || value.includes('meta ads') || value.includes('pauta')) return 'pink';
+      if (value.includes('web') || value.includes('seo') || value.includes('aeo') || value.includes('blog') || value.includes('optimización')) return 'green';
+      if (value.includes('identidad') || value.includes('manual') || value.includes('marca') || value.includes('kit')) return 'violet';
+      if (value.includes('linkedin') || value.includes('b2b') || value.includes('autoridad')) return 'cyan';
+      if (value.includes('video') || value.includes('micro') || value.includes('inducción')) return 'amber';
+      if (value.includes('inversión') || value.includes('$') || value.includes('presencia') || value.includes('crecimiento') || value.includes('posicionamiento')) return 'amber';
+      if (value.includes('diagnóstico') || value.includes('reporte') || value.includes('informe') || value.includes('accesos') || value.includes('insumos')) return 'white';
+      return 'cyan';
+    }
+
+    document.querySelectorAll('.card .tag').forEach((tag) => {
+      const span = document.createElement('span');
+      const tone = toneFor(tag.textContent);
+      span.className = 'icon';
+      span.dataset.tone = tone;
+      tag.dataset.tone = tone;
+      span.setAttribute('aria-hidden', 'true');
+      span.innerHTML = `<svg viewBox="0 0 24 24">${iconFor(tag.textContent)}</svg>`;
+      tag.prepend(span);
+    });
+
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const current = document.getElementById('current');
+    const total = document.getElementById('total');
+    const progress = document.getElementById('progress');
+    const topProgress = document.getElementById('top-progress');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursor-ring');
+    let index = 0;
+
+    total.textContent = String(slides.length).padStart(2, '0');
+
+    function render() {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        const c = slide.querySelector('.counter');
+        if (c) c.textContent = `${String(i + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+      });
+      current.textContent = String(index + 1).padStart(2, '0');
+      const pct = `${((index + 1) / slides.length) * 100}%`;
+      progress.style.width = pct;
+      topProgress.style.width = pct;
+      document.title = `${slides[index].dataset.title} | Propuesta TKC`;
+    }
+
+    function go(delta) {
+      index = Math.max(0, Math.min(slides.length - 1, index + delta));
+      render();
+    }
+
+    prev.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+    document.getElementById('stage').addEventListener('click', (event) => {
+      if (event.target.closest('button')) return;
+      go(1);
+    });
+
+    window.addEventListener('mousemove', (event) => {
+      cursor.style.left = `${event.clientX}px`;
+      cursor.style.top = `${event.clientY}px`;
+      cursorRing.style.left = `${event.clientX}px`;
+      cursorRing.style.top = `${event.clientY}px`;
+    });
+
+    document.querySelectorAll('button, .card, .competitor-card, .orbit-node, .value-line, .web-note').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        cursorRing.style.width = '54px';
+        cursorRing.style.height = '54px';
+        cursorRing.style.borderColor = 'rgba(246, 180, 59, .74)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorRing.style.width = '36px';
+        cursorRing.style.height = '36px';
+        cursorRing.style.borderColor = 'rgba(19, 227, 255, .48)';
+      });
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (['ArrowRight', ' ', 'PageDown'].includes(event.key)) {
+        event.preventDefault();
+        go(1);
+      }
+      if (['ArrowLeft', 'PageUp', 'Backspace'].includes(event.key)) {
+        event.preventDefault();
+        go(-1);
+      }
+      if (event.key.toLowerCase() === 'f') {
+        document.documentElement.requestFullscreen?.();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
