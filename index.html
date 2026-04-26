@@ -98,7 +98,7 @@
     .floating-brand {
       position: fixed;
       top: 18px;
-      left: 24px;
+      left: 26px;
       z-index: 220;
       display: flex;
       align-items: center;
@@ -116,6 +116,8 @@
       object-fit: contain;
       filter: drop-shadow(0 0 18px rgba(19,227,255,.28));
     }
+
+    .floating-brand span { display: none; }
 
     .app {
       min-height: 100%;
@@ -279,13 +281,15 @@
       height: 100vh;
       display: grid;
       grid-template-rows: 1fr auto;
-      padding: 44px 70px 28px;
+      padding: clamp(28px, 4vh, 44px) clamp(38px, 5vw, 70px) 24px;
     }
 
     .stage {
       position: relative;
-      width: min(1280px, 100%);
+      width: min(1280px, calc(100vw - 96px), calc((100vh - 128px) * 16 / 9));
+      max-height: calc(100vh - 128px);
       aspect-ratio: 16 / 9;
+      container-type: size;
       align-self: center;
       justify-self: center;
       border-radius: 18px;
@@ -380,13 +384,14 @@
       display: grid;
       align-content: center;
       gap: 22px;
+      min-height: 0;
     }
 
     h1 {
       font-family: "Bebas Neue", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
       text-transform: uppercase;
       letter-spacing: .045em;
-      font-size: clamp(36px, 4.25vw, 66px);
+      font-size: clamp(32px, min(5.1cqw, 8cqh), 64px);
       line-height: .98;
       margin: 0;
       text-wrap: balance;
@@ -403,7 +408,7 @@
     p.lead {
       margin: 0;
       color: var(--soft);
-      font-size: clamp(17px, 1.7vw, 24px);
+      font-size: clamp(15px, min(1.85cqw, 3.1cqh), 23px);
       line-height: 1.32;
       max-width: 880px;
     }
@@ -502,7 +507,7 @@
     .card strong {
       display: block;
       color: var(--white);
-      font-size: clamp(24px, 2.6vw, 40px);
+      font-size: clamp(22px, min(3.1cqw, 5cqh), 38px);
       line-height: 1;
       margin-bottom: 10px;
     }
@@ -550,6 +555,66 @@
       padding: 4px 12px;
       min-height: 84px;
       transition: transform .25s ease, filter .25s ease;
+      position: relative;
+    }
+
+    .metric[data-icon] {
+      padding-top: 6px;
+      border-left: 0;
+      border-top: 3px solid var(--cyan);
+      background: linear-gradient(180deg, rgba(19,227,255,.08), transparent);
+      border-radius: 12px;
+    }
+
+    .metric[data-icon]::before {
+      content: attr(data-icon);
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      color: var(--cyan-2);
+      background: rgba(19,227,255,.08);
+      border: 1px solid rgba(19,227,255,.22);
+      box-shadow: 0 0 18px rgba(19,227,255,.16);
+      font-size: 18px;
+    }
+
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .pillar-card {
+      min-height: 145px;
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .pillar-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: var(--accent, var(--cyan));
+      background: var(--tone, rgba(19,227,255,.1));
+      border: 1px solid color-mix(in srgb, var(--accent, var(--cyan)) 42%, transparent);
+      box-shadow: 0 0 22px var(--tone, rgba(19,227,255,.18));
+    }
+
+    .pillar-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .metric:hover {
@@ -792,6 +857,59 @@
     .node-c { left: 8%; bottom: 2%; }
     .node-d { right: 8%; bottom: 2%; }
 
+    .linkedin-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .linkedin-cards .card {
+      min-height: 190px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .large-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: var(--tone, rgba(19,227,255,.11));
+      color: var(--accent, var(--cyan));
+      border: 1px solid color-mix(in srgb, var(--accent, var(--cyan)) 45%, transparent);
+    }
+
+    .large-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .web-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .action-card {
+      min-height: 205px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .action-card strong {
+      font-size: clamp(28px, min(3vw, 5vh), 46px);
+    }
+
     .value-strip {
       display: grid;
       grid-template-columns: 1.05fr .95fr;
@@ -1012,7 +1130,7 @@
       .stage-wrap { height: auto; min-height: 100vh; padding: 18px; }
       .stage { aspect-ratio: auto; min-height: 74vh; }
       .slide { padding: 24px; }
-      .cards, .cards.three, .cards.four, .metric-grid, .timeline, .split, .competitor-grid, .value-strip, .web-diagnosis, .price-grid { grid-template-columns: 1fr; }
+      .cards, .cards.three, .cards.four, .metric-grid, .timeline, .split, .competitor-grid, .value-strip, .web-diagnosis, .price-grid, .pillar-grid, .linkedin-cards, .web-actions { grid-template-columns: 1fr; }
       .motion-map { min-height: 560px; }
       .motion-map::before { display: none; }
       .motion-center, .orbit-node { position: relative; inset: auto; width: 100%; height: auto; }
@@ -1033,7 +1151,7 @@
       <div class="side-grid"></div>
       <div class="brand-card"><img src="assets/logo-mark.png" alt="TKC Fumigaciones Group" /></div>
       <div class="side-stack" aria-label="Ejes de la propuesta">
-        <div class="side-pill"><b>01</b><span>Diagnóstico competitivo</span></div>
+        <div class="side-pill"><b>01</b><span>Diagnóstico inicial</span></div>
         <div class="side-pill"><b>02</b><span>Redes + pauta inicial</span></div>
         <div class="side-pill"><b>03</b><span>Website y posicionamiento</span></div>
         <div class="side-pill"><b>04</b><span>Identidad corporativa</span></div>
@@ -1067,50 +1185,63 @@
         <article class="slide" data-title="Contexto">
           <div class="slide-top"><div class="eyebrow">Contexto</div><div class="counter"></div></div>
           <div class="content">
-            <h1>TKC tiene respaldo. Ahora debe ser <span>más visible</span>.</h1>
+            <h1>TKC es una empresa con respaldo técnico y oportunidad digital.</h1>
             <div class="cards">
-              <div class="card"><div class="tag">Lo que ya existe</div><ul><li>Trayectoria desde 2004.</li><li>Clientes corporativos y certificaciones.</li><li>Web activa con líneas de negocio.</li><li>Experiencia técnica para educar al mercado.</li></ul></div>
-              <div class="card"><div class="tag">Lo que vamos a fortalecer</div><ul><li>Redes con línea visual más actual.</li><li>Instagram más fácil de encontrar.</li><li>TikTok como canal de descubrimiento.</li><li>LinkedIn fuerte para clientes empresariales.</li></ul></div>
+              <div class="card"><div class="tag">Qué es TKC</div><ul><li>Empresa de control de plagas y saneamiento ambiental.</li><li>Atiende hogares, empresas, instituciones y sectores productivos.</li><li>Cuenta con experiencia técnica, cobertura y líneas de servicio.</li><li>Tiene argumentos reales para construir confianza.</li></ul></div>
+              <div class="card"><div class="tag">Situación actual</div><ul><li>La marca existe, pero puede comunicar con más fuerza.</li><li>Las redes necesitan verse más consistentes y comerciales.</li><li>La web puede guiar mejor hacia contacto y cotización.</li><li>LinkedIn debe trabajar mejor el público empresarial.</li></ul></div>
             </div>
           </div>
         </article>
 
-        <article class="slide" data-title="Competencia">
-          <div class="slide-top"><div class="eyebrow">Competencia</div><div class="counter"></div></div>
+        <article class="slide" data-title="Diagnóstico TKC">
+          <div class="slide-top"><div class="eyebrow">Diagnóstico actual</div><div class="counter"></div></div>
           <div class="content">
-            <h1>Mapa competitivo: quién domina y dónde TKC puede <span>ganar</span>.</h1>
-            <p class="lead">Lectura pública de Instagram: seguidores + diagnóstico rápido por marca.</p>
+            <h1>Hoy TKC tiene base digital, pero necesita verse más clara y confiable.</h1>
+            <p class="lead">Este es el punto de partida: fortalecer cómo se encuentra, cómo se entiende y cómo convierte su presencia digital.</p>
             <div class="competitor-grid">
               <div class="competitor-card" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.28)">
-                <div class="competitor-head"><b>Orkin global</b><span class="followers">32K</span></div>
-                <p>Referente internacional: fuerte reconocimiento, autoridad y contenido educativo.</p>
+                <div class="competitor-head"><b>Instagram</b><span class="followers">01</span></div>
+                <p>Debe ser más fácil de encontrar, reconocer y entender desde el primer vistazo.</p>
                 <div class="signal"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
               </div>
               <div class="competitor-card" style="--accent:#f6b43b;--tone:rgba(246,180,59,.28)">
-                <div class="competitor-head"><b>Palmera Junior</b><span class="followers">11K</span></div>
-                <p>Competidor local visible: comunidad fuerte, constancia y alta recordación.</p>
+                <div class="competitor-head"><b>Facebook</b><span class="followers">02</span></div>
+                <p>Puede apoyar confianza, comunidad y recordación si mantiene una línea visual clara.</p>
                 <div class="signal"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
               </div>
               <div class="competitor-card" style="--accent:#13e3ff;--tone:rgba(19,227,255,.28)">
-                <div class="competitor-head"><b>TKC</b><span class="followers">384</span></div>
-                <p>Respaldo real con baja visibilidad: oportunidad clara para crecer con estrategia.</p>
+                <div class="competitor-head"><b>LinkedIn</b><span class="followers">03</span></div>
+                <p>Debe convertirse en canal de autoridad para clientes empresariales y B2B.</p>
                 <div class="signal"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
               </div>
               <div class="competitor-card" style="--accent:#28d780;--tone:rgba(40,215,128,.24)">
-                <div class="competitor-head"><b>Ambicol</b><span class="followers">342</span></div>
-                <p>Presencia similar a TKC: puede competir por cercanía, sector y contenido útil.</p>
+                <div class="competitor-head"><b>Website</b><span class="followers">04</span></div>
+                <p>Ya existe, pero puede ser más moderna, directa y orientada a cotización.</p>
                 <div class="signal"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
               </div>
               <div class="competitor-card" style="--accent:#a873ff;--tone:rgba(168,115,255,.25)">
-                <div class="competitor-head"><b>Rentokil CO</b><span class="followers">115</span></div>
-                <p>Marca internacional, pero su cuenta local no domina la conversación social.</p>
+                <div class="competitor-head"><b>Visual</b><span class="followers">05</span></div>
+                <p>La marca puede verse más actual, consistente y alineada a su respaldo técnico.</p>
                 <div class="signal"><i class="on"></i><i></i><i></i><i></i><i></i></div>
               </div>
               <div class="competitor-card" style="--accent:#f4f7fb;--tone:rgba(244,247,251,.18)">
-                <div class="competitor-head"><b>Zeta</b><span class="followers">49</span></div>
-                <p>Baja amenaza digital directa: oportunidad para que TKC tome ventaja visual.</p>
+                <div class="competitor-head"><b>Contacto</b><span class="followers">06</span></div>
+                <p>La experiencia debe llevar más rápido a WhatsApp, llamada o cotización.</p>
                 <div class="signal"><i class="on"></i><i></i><i></i><i></i><i></i></div>
               </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide" data-title="Diagnóstico sector">
+          <div class="slide-top"><div class="eyebrow">Antes de implementar</div><div class="counter"></div></div>
+          <div class="content">
+            <h1>Antes de crear la estrategia, revisamos el entorno del sector.</h1>
+            <p class="lead">Se hará un diagnóstico de redes sociales y páginas web de empresas del sector para identificar cómo comunican, cómo se ven, cómo captan clientes y cómo TKC puede mejorar.</p>
+            <div class="cards three">
+              <div class="card"><div class="tag">Comunicación</div><p>Qué mensajes usan, qué servicios priorizan y cómo explican su valor.</p></div>
+              <div class="card"><div class="tag">Visual</div><p>Cómo se ven sus redes, qué tan profesional es su contenido y qué patrones se repiten.</p></div>
+              <div class="card"><div class="tag">Contacto</div><p>Qué tan fácil es cotizar, escribir por WhatsApp, llamar o llegar a una página de servicio.</p></div>
             </div>
           </div>
         </article>
@@ -1130,7 +1261,7 @@
         <article class="slide" data-title="Diagnóstico">
           <div class="slide-top"><div class="eyebrow">Diagnóstico digital</div><div class="counter"></div></div>
           <div class="content">
-            <h1>Qué debemos fortalecer para que TKC se vea más <span>competitiva</span>.</h1>
+            <h1>Qué debemos fortalecer para que TKC se vea más <span>profesional</span>.</h1>
             <div class="cards">
               <div class="card"><div class="tag">Redes sociales</div><ul><li>Instagram no es fácil de encontrar sin el @ exacto.</li><li>La línea visual debe verse más técnica y confiable.</li><li>El contenido debe separar mensajes B2B y B2C.</li><li>No existe TikTok, aunque hay potencial educativo.</li></ul></div>
               <div class="card"><div class="tag">Website</div><ul><li>La web tiene buena base, pero puede convertir mejor.</li><li>Faltan páginas por servicio y sector.</li><li>El formulario y contactos deben simplificarse.</li><li>El blog puede ser motor de SEO y contenido.</li></ul></div>
@@ -1155,13 +1286,13 @@
           <div class="slide-top"><div class="eyebrow">Contenido</div><div class="counter"></div></div>
           <div class="content">
             <h1>Pilares para comunicar con <span>intención</span>.</h1>
-            <div class="cards three">
-              <div class="card"><div class="tag">Educación</div><p>Señales de alerta, prevención y buenas prácticas.</p></div>
-              <div class="card"><div class="tag">Autoridad técnica</div><p>Protocolos, certificaciones, HSEQ y procesos.</p></div>
-              <div class="card"><div class="tag">Confianza</div><p>Clientes, trayectoria, equipo y casos.</p></div>
-              <div class="card"><div class="tag">Conversión</div><p>Servicios, cotización, WhatsApp y formularios.</p></div>
-              <div class="card"><div class="tag">Sectores</div><p>Restaurantes, hoteles, bodegas, hogares e industria.</p></div>
-              <div class="card"><div class="tag">Cultura interna</div><p>Videos corporativos, inducción y formación.</p></div>
+            <div class="pillar-grid">
+              <div class="card pillar-card"><span class="pillar-icon" style="--accent:#13e3ff;--tone:rgba(19,227,255,.12)"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16V9"/><path d="M12 16V7"/><path d="M16 16v-4"/></svg></span><div><div class="tag">Educación</div><p>Señales de alerta, prevención y buenas prácticas.</p></div></div>
+              <div class="card pillar-card"><span class="pillar-icon" style="--accent:#f6b43b;--tone:rgba(246,180,59,.12)"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-5"/></svg></span><div><div class="tag">Autoridad técnica</div><p>Protocolos, certificaciones, HSEQ y procesos.</p></div></div>
+              <div class="card pillar-card"><span class="pillar-icon" style="--accent:#28d780;--tone:rgba(40,215,128,.12)"><svg viewBox="0 0 24 24"><path d="M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3z"/><path d="M8 11c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3z"/><path d="M2 20c.5-3 2.5-5 6-5s5.5 2 6 5"/><path d="M10 20c.4-2.3 2-4 5-4 2.8 0 4.6 1.5 5 4"/></svg></span><div><div class="tag">Confianza</div><p>Clientes, trayectoria, equipo y experiencia.</p></div></div>
+              <div class="card pillar-card"><span class="pillar-icon" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.12)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M22 12h-4"/><path d="M12 22v-4"/><path d="M2 12h4"/></svg></span><div><div class="tag">Conversión</div><p>Servicios, cotización, WhatsApp y formularios.</p></div></div>
+              <div class="card pillar-card"><span class="pillar-icon" style="--accent:#a873ff;--tone:rgba(168,115,255,.12)"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/></svg></span><div><div class="tag">Sectores</div><p>Restaurantes, hoteles, bodegas, hogares e industria.</p></div></div>
+              <div class="card pillar-card"><span class="pillar-icon" style="--accent:#f4f7fb;--tone:rgba(244,247,251,.1)"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span><div><div class="tag">Institucional</div><p>Comunicación corporativa, respaldo y consistencia visual.</p></div></div>
             </div>
           </div>
         </article>
@@ -1171,14 +1302,14 @@
           <div class="content">
             <h1>Números de implementación y <span>aprendizaje</span>.</h1>
             <div class="metric-grid">
-              <div class="metric"><b>36-48</b><span>Contenidos</span><small>IG, FB, TikTok y LinkedIn.</small></div>
-              <div class="metric"><b>12-16</b><span>LinkedIn</span><small>Enfoque B2B y autoridad.</small></div>
-              <div class="metric"><b>8-12</b><span>Reels/TikToks</span><small>Educativos y de descubrimiento.</small></div>
-              <div class="metric"><b>2-4</b><span>Blogs</span><small>SEO y contenido reutilizable.</small></div>
-              <div class="metric"><b>+15</b><span>Videos</span><small>Trabajados por bloques.</small></div>
-              <div class="metric"><b>1-2</b><span>Campañas</span><small>Según presupuesto aprobado.</small></div>
-              <div class="metric"><b>1</b><span>Web</span><small>Optimizada o en fase final.</small></div>
-              <div class="metric"><b>1</b><span>Informe</span><small>Aprendizajes y próximos pasos.</small></div>
+              <div class="metric" data-icon="◆"><b>36-48</b><span>Contenidos</span><small>IG, FB, TikTok y LinkedIn.</small></div>
+              <div class="metric" data-icon="in"><b>12-16</b><span>LinkedIn</span><small>Enfoque B2B y autoridad.</small></div>
+              <div class="metric" data-icon="▶"><b>8-12</b><span>Reels/TikToks</span><small>Educativos y de descubrimiento.</small></div>
+              <div class="metric" data-icon="✦"><b>2-4</b><span>Blogs</span><small>SEO y contenido reutilizable.</small></div>
+              <div class="metric" data-icon="$"><b>1-2</b><span>Campañas</span><small>Según presupuesto aprobado.</small></div>
+              <div class="metric" data-icon="↗"><b>1</b><span>Web</span><small>Optimización o inicio de rediseño.</small></div>
+              <div class="metric" data-icon="◷"><b>90</b><span>Días</span><small>Lectura de avance.</small></div>
+              <div class="metric" data-icon="✓"><b>1</b><span>Informe</span><small>Aprendizajes y próximos pasos.</small></div>
             </div>
           </div>
         </article>
@@ -1200,9 +1331,9 @@
           <div class="content">
             <h1>Una ruta escalonada para avanzar con foco.</h1>
             <div class="timeline">
-              <div class="phase card"><div class="tag">Mes 1 · Redes + videos</div><ul><li>Videos corporativos de procedimientos</li><li>Definición del enfoque de redes</li><li>Calendario y línea visual</li><li>Inicio completo de redes sociales</li></ul></div>
-              <div class="phase card"><div class="tag">Mes 2 · Web + pauta</div><ul><li>Inicio de optimización o rediseño web</li><li>Pauta después de fortalecer redes</li><li>Primeras campañas medibles</li><li>Ajustes según respuesta</li></ul></div>
-              <div class="phase card"><div class="tag">Mes 3 · Optimizar</div><ul><li>Web final o fase avanzada</li><li>Blog y contenido de apoyo</li><li>Informe trimestral</li><li>Plan de continuidad</li></ul></div>
+              <div class="phase card"><div class="tag">Mes 1 · Base digital</div><ul><li>Diagnóstico de TKC y revisión del sector.</li><li>Definición del enfoque de redes.</li><li>Calendario, tono y línea visual.</li><li>Inicio completo de publicaciones.</li></ul></div>
+              <div class="phase card"><div class="tag">Mes 2 · Web + pauta</div><ul><li>Inicio de ajustes o rediseño web según alcance.</li><li>Pauta cuando las redes ya estén más presentables.</li><li>Primeras campañas medibles.</li><li>Ajustes según respuesta real.</li></ul></div>
+              <div class="phase card"><div class="tag">Mes 3 · Optimizar</div><ul><li>Avance web por fases aprobadas.</li><li>Blog y contenido de apoyo.</li><li>Informe trimestral.</li><li>Plan de continuidad.</li></ul></div>
             </div>
           </div>
         </article>
@@ -1210,16 +1341,19 @@
         <article class="slide" data-title="Primeros meses">
           <div class="slide-top"><div class="eyebrow">Implementación</div><div class="counter"></div></div>
           <div class="content">
-            <h1>Primero ordenamos la base digital, luego aceleramos.</h1>
-            <div class="value-strip">
-              <div class="value-list">
-                <div class="value-line" style="--accent:#13e3ff;--tone:rgba(19,227,255,.14)"><b>Primer mes</b><span>Grabación y uso de videos corporativos de procedimientos, enfoque de redes, calendario, línea visual y arranque completo de contenidos.</span></div>
-                <div class="value-line" style="--accent:#f6b43b;--tone:rgba(246,180,59,.14)"><b>Segundo mes</b><span>Inicio de web y activación de pauta cuando las redes ya tengan mejor presentación, mensajes claros y piezas listas para recibir tráfico.</span></div>
-                <div class="value-line" style="--accent:#28d780;--tone:rgba(40,215,128,.14)"><b>Tercer mes</b><span>Optimización con datos: qué contenido funcionó, qué campaña trajo contactos y qué debe reforzarse para vender mejor.</span></div>
+            <h1>Primero construimos una base clara, luego aceleramos.</h1>
+            <div class="web-actions">
+              <div class="card action-card">
+                <span class="large-icon" style="--accent:#13e3ff;--tone:rgba(19,227,255,.12)"><svg viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h10"/><path d="M4 19h16"/><path d="M18 9l3 3-3 3"/></svg></span>
+                <div class="tag">Mes 1</div><strong>Redes listas</strong><p>Enfoque visual, calendario, mensajes por servicio y publicaciones iniciales.</p>
               </div>
-              <div class="card">
-                <div class="tag">Por qué así</div>
-                <p>Esto evita hacer todo al tiempo y permite que TKC llegue a pauta y web con una presencia más coherente, profesional y lista para convertir.</p>
+              <div class="card action-card">
+                <span class="large-icon" style="--accent:#f6b43b;--tone:rgba(246,180,59,.12)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/><path d="M8 11h6"/><path d="M11 8v6"/></svg></span>
+                <div class="tag">Antes de ejecutar</div><strong>Revisión sector</strong><p>Analizamos comunicación, visual y rutas de contacto para definir oportunidades reales.</p>
+              </div>
+              <div class="card action-card">
+                <span class="large-icon" style="--accent:#28d780;--tone:rgba(40,215,128,.12)"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-8"/><path d="M14 7h6v6"/></svg></span>
+                <div class="tag">Mes 2 en adelante</div><strong>Web + pauta</strong><p>Activamos tráfico cuando la marca ya tenga una base más coherente para convertir.</p>
               </div>
             </div>
           </div>
@@ -1231,22 +1365,22 @@
             <h1>Opciones para iniciar de forma <span>progresiva</span>.</h1>
             <div class="cards three">
               <div class="card"><div class="tag">Presencia activa</div><strong>$1.800.000</strong><p>12 contenidos, IG/FB, 4 reels, 1 jornada, informe básico.</p></div>
-              <div class="card"><div class="tag">Crecimiento digital</div><strong>$2.600.000</strong><p>16 contenidos, LinkedIn, TikTok, pauta inicial y reporte.</p></div>
+              <div class="card"><div class="tag">Crecimiento digital</div><strong>$2.600.000</strong><p>16 contenidos, LinkedIn, TikTok, gestión de pauta y reporte.</p></div>
               <div class="card"><div class="tag">Posicionamiento</div><strong>$3.500.000</strong><p>22 contenidos, LinkedIn fuerte, 3 campañas y 2 jornadas.</p></div>
             </div>
+            <p class="lead">Importante: el presupuesto de pauta se paga aparte por TKC. Para iniciar se sugiere entre $800.000 y $1.500.000 COP mensuales.</p>
           </div>
         </article>
 
         <article class="slide" data-title="LinkedIn B2B">
           <div class="slide-top"><div class="eyebrow">LinkedIn</div><div class="counter"></div></div>
           <div class="content">
-            <h1>LinkedIn debe abrir conversaciones con clientes empresariales.</h1>
-            <div class="motion-map">
-              <div class="motion-center">TKC como aliado B2B</div>
-              <div class="orbit-node node-a" style="--accent:#13e3ff;--tone:rgba(19,227,255,.2)"><b>Autoridad</b><p>Certificaciones, procesos y cumplimiento.</p></div>
-              <div class="orbit-node node-b" style="--accent:#f6b43b;--tone:rgba(246,180,59,.2)"><b>Sectores</b><p>Hoteles, industria, bodegas, comercio y alimentos.</p></div>
-              <div class="orbit-node node-c" style="--accent:#28d780;--tone:rgba(40,215,128,.2)"><b>Confianza</b><p>Clientes, equipo, experiencia y cobertura.</p></div>
-              <div class="orbit-node node-d" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.2)"><b>Contacto</b><p>Mensajes comerciales que inviten a cotizar.</p></div>
+            <h1>LinkedIn debe convertir respaldo técnico en autoridad empresarial.</h1>
+            <div class="linkedin-cards">
+              <div class="card"><span class="large-icon" style="--accent:#13e3ff;--tone:rgba(19,227,255,.12)"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-5"/></svg></span><div class="tag">Autoridad</div><p>Certificaciones, procesos, cumplimiento y respaldo técnico.</p></div>
+              <div class="card"><span class="large-icon" style="--accent:#f6b43b;--tone:rgba(246,180,59,.12)"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></span><div class="tag">Sectores</div><p>Contenido para industria, alimentos, comercio, hoteles y bodegas.</p></div>
+              <div class="card"><span class="large-icon" style="--accent:#28d780;--tone:rgba(40,215,128,.12)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><div class="tag">Confianza</div><p>Clientes, experiencia, cobertura y equipo como prueba comercial.</p></div>
+              <div class="card"><span class="large-icon" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.12)"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg></span><div class="tag">Conversación</div><p>Mensajes comerciales para invitar a cotizar y agendar asesoría.</p></div>
             </div>
           </div>
         </article>
@@ -1254,25 +1388,24 @@
         <article class="slide" data-title="Web">
           <div class="slide-top"><div class="eyebrow">Website</div><div class="counter"></div></div>
           <div class="content">
-            <h1>La web debe hacer que el cliente contacte <span>más rápido</span>.</h1>
-            <div class="cards">
-              <div class="card"><div class="tag">Menos fricción</div><ul><li>El formulario no puede ser el único camino.</li><li>Muchos clientes ven “contáctanos” y no quieren llenar campos.</li><li>El botón de WhatsApp debe estar visible y contextual.</li><li>Llamada, correo y cotización deben estar a un clic.</li></ul></div>
-              <div class="card"><div class="tag">Sugerencia comercial</div><p>Convertir la web en una herramienta de venta directa: servicios claros, sectores atendidos, prueba de confianza y llamados a la acción rápidos en cada página.</p></div>
+            <h1>La web debe convertir visitas en conversaciones rápidas.</h1>
+            <div class="web-actions">
+              <div class="card action-card"><span class="large-icon" style="--accent:#28d780;--tone:rgba(40,215,128,.12)"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg></span><div class="tag">WhatsApp protagonista</div><p>El acceso debe estar visible y conectado con servicios clave, sectores y cotización.</p></div>
+              <div class="card action-card"><span class="large-icon" style="--accent:#f6b43b;--tone:rgba(246,180,59,.12)"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></span><div class="tag">Cotizar sin fricción</div><p>Botones claros, formulario breve y caminos rápidos para llamada o asesoría.</p></div>
+              <div class="card action-card"><span class="large-icon" style="--accent:#13e3ff;--tone:rgba(19,227,255,.12)"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-5"/></svg></span><div class="tag">Confianza inmediata</div><p>Certificaciones, clientes, experiencia y beneficios visibles antes de pedir datos.</p></div>
             </div>
           </div>
         </article>
 
-        <article class="slide" data-title="Web competencia">
+        <article class="slide" data-title="Diagnóstico web">
           <div class="slide-top"><div class="eyebrow">Diagnóstico web</div><div class="counter"></div></div>
           <div class="content">
-            <h1>La web de TKC puede competir mejor si comunica confianza en segundos.</h1>
-            <div class="web-diagnosis">
-              <div class="web-score"><strong>Web que <span>vende</span> rápido</strong></div>
-              <div class="web-notes">
-                <div class="web-note" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.14)"><b>Rentokil / Orkin</b><p>Proyectan autoridad internacional y rutas claras por servicio.</p></div>
-                <div class="web-note" style="--accent:#f6b43b;--tone:rgba(246,180,59,.14)"><b>Palmera Junior</b><p>Se siente más cercana y local; gana por rapidez de contacto y recordación.</p></div>
-                <div class="web-note" style="--accent:#28d780;--tone:rgba(40,215,128,.14)"><b>Oportunidad TKC</b><p>Servicios visibles, prueba de experiencia, certificaciones, blog útil y botones de cotización siempre disponibles.</p></div>
-              </div>
+            <h1>La web de TKC debe comunicar confianza en segundos.</h1>
+            <div class="linkedin-cards">
+              <div class="card"><span class="large-icon" style="--accent:#ff4c8b;--tone:rgba(255,76,139,.12)"><svg viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h10"/></svg></span><div class="tag">Claridad</div><p>Servicios, sectores y beneficios deben entenderse sin navegar demasiado.</p></div>
+              <div class="card"><span class="large-icon" style="--accent:#28d780;--tone:rgba(40,215,128,.12)"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.7.6 2.5a2 2 0 0 1-.4 2.1L8 9.6a16 16 0 0 0 6.4 6.4l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.6.5 2.5.6a2 2 0 0 1 1.7 2z"/></svg></span><div class="tag">Contacto</div><p>WhatsApp, llamada y cotización deben aparecer como decisiones rápidas.</p></div>
+              <div class="card"><span class="large-icon" style="--accent:#f6b43b;--tone:rgba(246,180,59,.12)"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M8 12h8"/></svg></span><div class="tag">Confianza</div><p>Certificaciones, clientes, procesos y experiencia deben reforzar la decisión.</p></div>
+              <div class="card"><span class="large-icon" style="--accent:#a873ff;--tone:rgba(168,115,255,.12)"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M12 16V8"/><path d="M16 16v-3"/></svg></span><div class="tag">Contenido útil</div><p>Blogs, preguntas frecuentes y páginas por servicio ayudan a posicionar.</p></div>
             </div>
           </div>
         </article>
@@ -1306,14 +1439,14 @@
           <div class="content">
             <h1>Lo que no se mide se vuelve opinión. Aquí medimos avance.</h1>
             <div class="metric-grid">
-              <div class="metric"><b>Alcance</b><span>Marca</span><small>Personas impactadas.</small></div>
-              <div class="metric"><b>Clics</b><span>Interés</span><small>Tráfico a web o WhatsApp.</small></div>
-              <div class="metric"><b>Leads</b><span>Contacto</span><small>Formularios, mensajes y llamadas.</small></div>
-              <div class="metric"><b>CPL</b><span>Pauta</span><small>Costo por contacto.</small></div>
-              <div class="metric"><b>Top</b><span>Contenido</span><small>Piezas con mejor respuesta.</small></div>
-              <div class="metric"><b>SEO</b><span>Web</span><small>Blogs y páginas visibles.</small></div>
-              <div class="metric"><b>CTR</b><span>Anuncios</span><small>Calidad del mensaje.</small></div>
-              <div class="metric"><b>90</b><span>Días</span><small>Lectura trimestral.</small></div>
+              <div class="metric" data-icon="◉"><b>Alcance</b><span>Marca</span><small>Personas impactadas.</small></div>
+              <div class="metric" data-icon="↗"><b>Clics</b><span>Interés</span><small>Tráfico a web o WhatsApp.</small></div>
+              <div class="metric" data-icon="✉"><b>Leads</b><span>Contacto</span><small>Formularios, mensajes y llamadas.</small></div>
+              <div class="metric" data-icon="$"><b>CPL</b><span>Pauta</span><small>Costo por contacto.</small></div>
+              <div class="metric" data-icon="★"><b>Top</b><span>Contenido</span><small>Piezas con mejor respuesta.</small></div>
+              <div class="metric" data-icon="⌕"><b>SEO</b><span>Web</span><small>Blogs y páginas visibles.</small></div>
+              <div class="metric" data-icon="%"><b>CTR</b><span>Anuncios</span><small>Calidad del mensaje.</small></div>
+              <div class="metric" data-icon="◷"><b>90</b><span>Días</span><small>Lectura trimestral.</small></div>
             </div>
           </div>
         </article>
@@ -1324,7 +1457,7 @@
             <h1>Qué necesitamos de TKC para trabajar con agilidad.</h1>
             <div class="cards">
               <div class="card"><div class="tag">Accesos</div><ul><li>Instagram, Facebook y LinkedIn.</li><li>Administrador comercial de Meta.</li><li>Web, dominio y hosting.</li><li>Google Analytics/Search Console si existen.</li></ul></div>
-              <div class="card"><div class="tag">Insumos</div><ul><li>Servicios prioritarios.</li><li>Fotos, certificaciones y clientes autorizados.</li><li>Agenda de grabación por bloques.</li><li>Aprobación mensual de contenidos.</li></ul></div>
+              <div class="card"><div class="tag">Insumos</div><ul><li>Servicios prioritarios.</li><li>Fotos, certificaciones y clientes autorizados.</li><li>Información comercial de líneas y sectores.</li><li>Aprobación mensual de contenidos.</li></ul></div>
             </div>
           </div>
         </article>
@@ -1334,21 +1467,21 @@
           <div class="content">
             <h1>Así arrancamos los primeros 3 meses.</h1>
             <div class="timeline">
-              <div class="phase card"><div class="tag">Mes 1</div><strong>Redes + videos</strong><p>Base de contenidos, procedimientos, enfoque visual, calendario y publicaciones iniciales.</p></div>
-              <div class="phase card"><div class="tag">Mes 2</div><strong>Web + pauta</strong><p>Iniciamos web y activamos campañas cuando las redes ya estén optimizadas.</p></div>
-              <div class="phase card"><div class="tag">Mes 3</div><strong>Medición + continuidad</strong><p>Revisamos resultados, ajustamos contenidos y definimos qué se escala.</p></div>
+              <div class="phase card"><div class="tag">Mes 1</div><strong>Redes y base visual</strong><p>Diagnóstico, enfoque, calendario, tono, publicaciones iniciales y estructura de contenidos.</p></div>
+              <div class="phase card"><div class="tag">Mes 2</div><strong>Web + pauta</strong><p>Iniciamos web por fases y activamos campañas cuando las redes estén listas para recibir tráfico.</p></div>
+              <div class="phase card"><div class="tag">Mes 3</div><strong>Medición + continuidad</strong><p>Revisamos resultados, ajustamos contenidos y definimos qué se fortalece o escala.</p></div>
             </div>
           </div>
         </article>
 
         <article class="slide" data-title="Cierre">
-          <div class="slide-top"><div class="eyebrow">Cómo iniciamos</div><div class="counter"></div></div>
+          <div class="slide-top"><div class="eyebrow">Nuestra próxima reunión</div><div class="counter"></div></div>
           <div class="content">
-            <h1>Llegamos a la jornada con una base lista para decidir y producir.</h1>
-            <p class="lead">La idea es presentar una base inicial de contenidos para redes: qué servicios priorizar, qué empezar a publicar y cómo conectar esos contenidos con videos, web y pauta.</p>
+            <h1>Llegamos con una base lista para decidir y empezar.</h1>
+            <p class="lead">La idea es llevar una propuesta inicial de temas para redes: qué servicios priorizar, qué empezar a publicar y cómo alinear la comunicación con web, pauta e identidad.</p>
             <div class="cards">
-              <div class="card"><div class="tag">En la reunión</div><ul><li>Mostrar propuestas de temas para redes.</li><li>Validar servicios y públicos prioritarios.</li><li>Definir qué videos de procedimientos grabar primero.</li><li>Aprobar el enfoque visual y comercial inicial.</li></ul></div>
-              <div class="card"><div class="tag">Después de aprobar</div><p>Se arma el calendario del primer mes, se organizan las grabaciones y se inicia la producción de piezas para activar redes completamente.</p></div>
+              <div class="card"><div class="tag">Qué llevamos</div><ul><li>Base de temas para iniciar redes.</li><li>Servicios y públicos sugeridos.</li><li>Primer enfoque visual y comercial.</li><li>Ideas de publicaciones por línea.</li></ul></div>
+              <div class="card"><div class="tag">Qué definimos</div><p>Priorizamos contenidos, aprobamos la ruta del primer mes y dejamos claros los próximos pasos para activar redes, web y pauta de forma progresiva.</p></div>
             </div>
           </div>
         </article>
